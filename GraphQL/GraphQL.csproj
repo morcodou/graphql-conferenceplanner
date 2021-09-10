@@ -18,8 +18,10 @@
 
   <ItemGroup>
     <None Remove="Extensions\" />
+    <None Remove="DataLoader\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Extensions\" />
+    <Folder Include="DataLoader\" />
   </ItemGroup>
 </Project>
