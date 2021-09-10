@@ -20,10 +20,14 @@
     <None Remove="Extensions\" />
     <None Remove="DataLoader\" />
     <None Remove="Types\" />
+    <None Remove="Common\" />
+    <None Remove="Speakers\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Extensions\" />
     <Folder Include="DataLoader\" />
     <Folder Include="Types\" />
+    <Folder Include="Common\" />
+    <Folder Include="Speakers\" />
   </ItemGroup>
 </Project>
