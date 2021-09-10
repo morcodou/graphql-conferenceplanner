@@ -6,7 +6,8 @@ namespace ConferencePlanner.GraphQL
 {
     public class Mutation
     {
-        public async Task<AddSpeakerPayload> AddSpeakerAsync(AddSpeakerInput input, [Service] ApplicationDbContext context)
+        [UseApplicationDbContext]
+        public async Task<AddSpeakerPayload> AddSpeakerAsync(AddSpeakerInput input, [ScopedService] ApplicationDbContext context)
         {
             var speaker = new Speaker
             {

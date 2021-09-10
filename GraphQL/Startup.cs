@@ -20,7 +20,7 @@ namespace GraphQL
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddDbContext<ApplicationDbContext>(options =>
+                .AddPooledDbContextFactory<ApplicationDbContext>(options =>
                     options.UseSqlite("Data Source=conferences.db"));
             
             services.AddGraphQLServer()
