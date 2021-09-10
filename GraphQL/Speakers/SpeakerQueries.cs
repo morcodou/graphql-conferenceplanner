@@ -7,13 +7,16 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using ConferencePlanner.GraphQL.DataLoader;
 using HotChocolate.Types.Relay;
+using HotChocolate.Types;
 
-namespace ConferencePlanner.GraphQL
+namespace ConferencePlanner.GraphQL.Speakers
 {
-    public class Query
+    [ExtendObjectType(Name = "Query")]
+    public class SpeakerQueries
     {
         [UseApplicationDbContext]
-        public Task<List<Speaker>> GetSpeakers([ScopedService] ApplicationDbContext context) => context.Speakers.ToListAsync();
+        public Task<List<Speaker>> GetSpeakers(
+            [ScopedService] ApplicationDbContext context) => context.Speakers.ToListAsync();
 
         public Task<Speaker> GetSpeakerAsync(
             [ID(nameof(Speaker))] int id,
