@@ -15,5 +15,18 @@ namespace ConferencePlanner.GraphQL
               create: provider => provider.GetRequiredService<IDbContextFactory<TDbContext>>().CreateDbContext(),
               disposeAsync: (provider, dbContext) => dbContext.DisposeAsync());
         }
+
+        public static IObjectFieldDescriptor UseUpperCase(this IObjectFieldDescriptor descriptor)
+        {
+            return descriptor.Use(next => async context =>
+            {
+                await next(context);
+
+                if (context.Result is string s)
+                {
+                    context.Result = s.ToUpperInvariant();
+                }
+            });
+        }
     }
 }
