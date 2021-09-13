@@ -19,7 +19,7 @@ namespace ConferencePlanner.GraphQL.Types
             descriptor
                 .Field(t => t.Name)
                 .UseUpperCase();
-
+                    
             descriptor
                 .ImplementsNode()
                 .IdField(t => t.Id)
@@ -29,6 +29,7 @@ namespace ConferencePlanner.GraphQL.Types
                 .Field(t => t.Sessions)
                 .ResolveWith<TrackResolvers>(t => t.GetSessionsAsync(default!, default!, default!, default))
                 .UseDbContext<ApplicationDbContext>()
+                .UsePaging<NonNullType<SessionType>>()
                 .Name("sessions");
         }
 
@@ -36,12 +37,12 @@ namespace ConferencePlanner.GraphQL.Types
         {
             public async Task<IEnumerable<Session>> GetSessionsAsync(
                 Track track,
-                [ScopedService] ApplicationDbContext dbContext,
+                [ScopedService] ApplicationDbContext context,
                 SessionByIdDataLoader sessionById,
                 CancellationToken cancellationToken)
             {
-                int[] sessionIds = await dbContext.Speakers
-                    .Where(s => s.Id == track.Id)
+                int[] sessionIds = await context.Sessions
+                    .Where(s => s.TrackId == track.Id)
                     .Select(s => s.Id)
                     .ToArrayAsync();
 

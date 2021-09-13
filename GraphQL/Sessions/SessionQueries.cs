@@ -8,6 +8,7 @@ using System.Threading;
 using ConferencePlanner.GraphQL.DataLoader;
 using HotChocolate.Types.Relay;
 using HotChocolate.Types;
+using ConferencePlanner.GraphQL.Types;
 
 namespace ConferencePlanner.GraphQL.Sessions
 {
@@ -15,10 +16,8 @@ namespace ConferencePlanner.GraphQL.Sessions
     public class SessionQueries
     {
         [UseApplicationDbContext]
-        public async Task<List<Session>> GetSessionsAsync(
-            [ScopedService] ApplicationDbContext context,
-            CancellationToken cancellationToken) =>
-            await context.Sessions.ToListAsync(cancellationToken);
+        [UsePaging(typeof(NonNullType<SessionType>))]
+        public IQueryable<Session> GetSessions( [ScopedService] ApplicationDbContext context) => context.Sessions;
 
         public Task<Session> GetSessionByIdAsync(
             [ID(nameof(Speaker))] int id,
