@@ -39,6 +39,8 @@ namespace GraphQL
                         .AddTypeExtension<SessionMutations>()
                         .AddTypeExtension<SpeakerMutations>()
                         .AddTypeExtension<TrackMutations>()
+                    .AddSubscriptionType(s => s.Name("Subscription"))
+                        .AddTypeExtension<SessionSubscriptions>()
                     .AddType<AttendeeType>()
                     .AddType<SessionType>()
                     .AddType<SpeakerType>()
@@ -46,6 +48,7 @@ namespace GraphQL
                     .EnableRelaySupport()
                     .AddFiltering()
                     .AddSorting()
+                    .AddInMemorySubscriptions()
                     .AddDataLoader<SpeakerByIdDataLoader>()
                     .AddDataLoader<SessionByIdDataLoader>();
 
@@ -60,6 +63,7 @@ namespace GraphQL
             }
 
             app.UseRouting();
+            app.UseWebSockets();
 
             app.UseEndpoints(endpoints =>
             {
