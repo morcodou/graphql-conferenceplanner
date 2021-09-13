@@ -4,7 +4,7 @@ using HotChocolate.Types.Relay;
 namespace ConferencePlanner.GraphQL.Attendees
 {
     public record CheckInAttendeeInput(
-       [ID(nameof(Speaker))]
+       [ID(nameof(Session))]
        int SessionId,
        [ID(nameof(Attendee))]
        int AttendeeId);

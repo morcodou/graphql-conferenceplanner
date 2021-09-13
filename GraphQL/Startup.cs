@@ -40,6 +40,7 @@ namespace GraphQL
                         .AddTypeExtension<SpeakerMutations>()
                         .AddTypeExtension<TrackMutations>()
                     .AddSubscriptionType(s => s.Name("Subscription"))
+                        .AddTypeExtension<AttendeeSubscriptions>()
                         .AddTypeExtension<SessionSubscriptions>()
                     .AddType<AttendeeType>()
                     .AddType<SessionType>()

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using ConferencePlanner.GraphQL.Common;
 using ConferencePlanner.GraphQL.Data;
 using HotChocolate;
+using HotChocolate.Subscriptions;
 using HotChocolate.Types;
 using Microsoft.EntityFrameworkCore;
 
@@ -35,6 +36,7 @@ namespace ConferencePlanner.GraphQL.Attendees
         public async Task<CheckInAttendeePayload> CheckInAttendeeAsync(
             CheckInAttendeeInput input,
             [ScopedService] ApplicationDbContext context,
+            [Service] ITopicEventSender eventSender,
             CancellationToken cancellationToken)
         {
             var attendee = await context.Attendees
@@ -52,6 +54,11 @@ namespace ConferencePlanner.GraphQL.Attendees
                 });
 
             await context.SaveChangesAsync(cancellationToken);
+
+            await eventSender.SendAsync(
+                "OnAttendeeCheckedIn_" + input.SessionId,
+                input.AttendeeId,
+                cancellationToken);
 
             return new CheckInAttendeePayload(attendee, input.SessionId);
         }
