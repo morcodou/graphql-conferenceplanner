@@ -42,6 +42,8 @@ namespace GraphQL
                     .AddType<SpeakerType>()
                     .AddType<TrackType>()
                     .EnableRelaySupport()
+                    .AddFiltering()
+                    .AddSorting()
                     .AddDataLoader<SpeakerByIdDataLoader>()
                     .AddDataLoader<SessionByIdDataLoader>();
 
